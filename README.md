@@ -16,7 +16,7 @@ source /etc/profile
 4. 显示token `cat /var/lib/rancher/rke2/server/node-token`
 5. 配置文件 `/etc/rancher/rke2/config.yaml`
 ```yaml
-token: $TOKEN
+token: TOKEN
 tls-san:
   - server1
 ```
@@ -25,7 +25,7 @@ tls-san:
 1. 配置文件 `/etc/rancher/rke2/config.yaml`
 ```yaml
 server: https://server1:9345
-token: $TOKEN
+token: TOKEN
 tls-san:
   - server1
 ```
@@ -35,7 +35,7 @@ tls-san:
 1. 配置文件 `/etc/rancher/rke2/config.yaml`
 ```yaml
 server: https://server1:9345
-token: $TOKEN
+token: TOKEN
 ```
 2. 安装 agent `curl -sfL https://get.rke2.io | INSTALL_RKE2_TYPE="agent" sh -`
 3. `systemctl enable rke2-agent`

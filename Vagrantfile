@@ -28,10 +28,9 @@ mkdir -p /etc/rancher/rke2/
 
 SCRIPT
 
+# ==================  VMs =====================
 
-# ========  VMs =======
-
-    # Server1 ------------------------------------------------
+    # ======= Server1 ========
     config.vm.define "server1" do |vagrant|
         vagrant.vm.hostname = "server1"
         vagrant.vm.network "private_network", ip: "192.168.56.10"
@@ -50,7 +49,7 @@ EOL
 
     end
 
-    # Server2 ------------------------------------------------
+    # ======= Server2 ========
     config.vm.define "server2" do |vagrant|
         vagrant.vm.hostname = "server2"
         vagrant.vm.network "private_network", ip: "192.168.56.11"
@@ -70,7 +69,7 @@ EOL
 
     end
 
-    # Server3 ------------------------------------------------
+    # ======= Server3 ========
     config.vm.define "server3" do |vagrant|
         vagrant.vm.hostname = "server3"
         vagrant.vm.network "private_network", ip: "192.168.56.12"
@@ -90,7 +89,7 @@ EOL
 
     end
 
-    # worker1 ------------------------------------------------
+    # ------ worker1 ------
     config.vm.define "worker1" do |vagrant|
         vagrant.vm.hostname = "worker1"
         vagrant.vm.network "private_network", ip: "192.168.56.100"
@@ -109,7 +108,7 @@ EOL
 
     end
 
-    # worker2 ------------------------------------------------
+    # ------ worker2 ------
     config.vm.define "worker2" do |vagrant|
         vagrant.vm.hostname = "worker2"
         vagrant.vm.network "private_network", ip: "192.168.56.101"

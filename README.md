@@ -1,47 +1,23 @@
-### Rancher RKE2 安装高可用
+### Rancher RKE2 高可用
 
----- server ----
-第一个server：
-1. 安装 `curl -sfL  https://get.rke2.io   | sh -`
-2. `systemctl enable rke2-server`
-3. `systemctl start rke2-server`
-4. 配置本地kubectl
+#### 自动
+* 第一个server节点
+1. `vagrant up server1`
+2. `vagrant ssh server1`
+
 ```shell
-vim /etc/profile
-export PATH=/var/lib/rancher/rke2/bin:$PATH
-export KUBECONFIG=/etc/rancher/rke2/rke2.yaml
+  sudo -s
+  cd /vagrant && sh server1.sh
 
-source /etc/profile
+  cat /var/lib/rancher/rke2/server/node-token
 ```
-4. 显示token `cat /var/lib/rancher/rke2/server/node-token`
-5. 配置文件 `/etc/rancher/rke2/config.yaml`
-```yaml
-token: TOKEN
-tls-san:
-  - server1
-```
+3. 修改`./setup/.env` (不存在则新建)，设置 `TOKEN=$token`
 
-其他server
-1. 配置文件 `/etc/rancher/rke2/config.yaml`
-```yaml
-server: https://server1:9345
-token: TOKEN
-tls-san:
-  - server1
-```
-重复执行第一个server: 1-4
+* 所有其他server和worker节点
+1. `vagrant up`
+2. 其他server节点执行 `servers.sh`
+3. worker节点节点执行 `workers.sh`
 
----- workers ----
-1. 配置文件 `/etc/rancher/rke2/config.yaml`
-```yaml
-server: https://server1:9345
-token: TOKEN
-```
-2. 安装 agent `curl -sfL https://get.rke2.io | INSTALL_RKE2_TYPE="agent" sh -`
-3. `systemctl enable rke2-agent`
-4. `systemctl start rke2-agent`
-
-
----- kubectl外部连接 ----
+* kubectl外部连接
 1. 复制配置文件 `/etc/rancher/rke2/rke2.yaml` 为 `~/.kube/config`
 2. 修改127.0.0.1 为外部ip地址

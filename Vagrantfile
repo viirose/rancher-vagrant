@@ -7,9 +7,10 @@ Vagrant.configure("2") do |config|
         vb.memory = "4096"
     end
 
-    # config.vm.synced_folder "./setup", "/vagrant"
+    config.vm.synced_folder "./setup", "/vagrant"
 
-    $script = <<-SCRIPT
+# -------- Iint VM --------
+    $init_vm = <<-SCRIPT
 sed -i 's/#PermitRootLogin/PermitRootLogin/g' /etc/ssh/sshd_config
 setenforce 0
 sed -i 's/SELINUX=enforcing/SELINUX=disabled/g' /etc/selinux/config
@@ -32,9 +33,16 @@ export all_proxy=https://queen:7d09a90c@tk.storm-walker.com:443
 export no_proxy=localhost,127.0.0.1,192.168.56.0/12,::1,server1,server2,server3,worker1,worker2
 EOL
 
+source /etc/profile
+
+mkdir -p /etc/rancher/rke2/
+
 SCRIPT
 
-    # Master
+
+# ========  VMs =======
+
+    # Server1 ------------------------------------------------
     config.vm.define "server1" do |vagrant|
         vagrant.vm.hostname = "server1"
         vagrant.vm.network "private_network", ip: "192.168.56.10"
@@ -49,11 +57,12 @@ SCRIPT
 EOL
         SHELL
 
-        vagrant.vm.provision "shell", inline: $script
+        # init VM
+        vagrant.vm.provision "shell", inline: $init_vm
 
     end
 
-    # Master
+    # Server2 ------------------------------------------------
     config.vm.define "server2" do |vagrant|
         vagrant.vm.hostname = "server2"
         vagrant.vm.network "private_network", ip: "192.168.56.11"
@@ -69,11 +78,12 @@ EOL
 
         SHELL
 
-        vagrant.vm.provision "shell", inline: $script
+        # init VM
+        vagrant.vm.provision "shell", inline: $init_vm
 
     end
 
-    # Master
+    # Server3 ------------------------------------------------
     config.vm.define "server3" do |vagrant|
         vagrant.vm.hostname = "server3"
         vagrant.vm.network "private_network", ip: "192.168.56.12"
@@ -89,11 +99,12 @@ EOL
 
         SHELL
 
-        vagrant.vm.provision "shell", inline: $script
+        # init VM
+        vagrant.vm.provision "shell", inline: $init_vm
 
     end
 
-    # worker1
+    # worker1 ------------------------------------------------
     config.vm.define "worker1" do |vagrant|
         vagrant.vm.hostname = "worker1"
         vagrant.vm.network "private_network", ip: "192.168.56.100"
@@ -108,11 +119,12 @@ EOL
 EOL
         SHELL
 
-        vagrant.vm.provision "shell", inline: $script
+        # init VM
+        vagrant.vm.provision "shell", inline: $init_vm
 
     end
 
-    # worker2
+    # worker2 ------------------------------------------------
     config.vm.define "worker2" do |vagrant|
         vagrant.vm.hostname = "worker2"
         vagrant.vm.network "private_network", ip: "192.168.56.101"
@@ -127,7 +139,8 @@ EOL
 EOL
         SHELL
 
-        vagrant.vm.provision "shell", inline: $script
+        # init VM
+        vagrant.vm.provision "shell", inline: $init_vm
 
     end
 

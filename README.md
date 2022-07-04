@@ -20,4 +20,4 @@
 
 * kubectl外部连接
 1. 复制配置文件 `/etc/rancher/rke2/rke2.yaml` 为 `~/.kube/config`
-2. 修改127.0.0.1 为外部ip地址
+2. 修改127.0.0.1 为server节点ip地址

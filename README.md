@@ -1,4 +1,4 @@
-### Rancher RKE2 kubernetes cluster
+### Rancher RKE2 kubernetes 集群
 
 * 第一个server节点
 1. `vagrant up server1`

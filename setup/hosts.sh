@@ -1,9 +1,9 @@
 # /bin/sh
 
 cat >> /etc/hosts <<EOL
-192.168.8.100 server1
-192.168.8.101 server2
-192.168.8.102 server3
-192.168.8.200 worker1
-192.168.8.201 worker2
+10.211.55.10 server1
+10.211.55.11 server2
+10.211.55.12 server3
+10.211.55.100 worker1
+10.211.55.101 worker2
 EOL

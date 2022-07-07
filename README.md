@@ -61,3 +61,9 @@ listen rc.local
 3. `/usr/local/opt/haproxy/bin/haproxy -f /usr/local/etc/haproxy.cfg`
 4. 配置hosts `127.0.0.1     rc.local` 
 5. 设置证书信任
+
+
+apt -y install chrony
+/etc/chrony/chrony.conf
+
+curl -sfL http://rancher-mirror.rancher.cn/rke2/install.sh | INSTALL_RKE2_MIRROR=cn sh -

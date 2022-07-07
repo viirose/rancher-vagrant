@@ -2,6 +2,7 @@
 
 source ./.env
 
+mkdir -p /etc/rancher/rke2/
 cat > /etc/rancher/rke2/config.yaml <<EOL
 server: https://server1:9345
 token: ${TOKEN}

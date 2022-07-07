@@ -24,6 +24,14 @@
 ### Rancher 高可用安装
 1. `https://rancher.com/docs/rancher/v2.6/en/installation/install-rancher-on-k8s`
 
+```
+WARNING: Kubernetes configuration file is group-readable. This is insecure. Location: /Users/kris/.kube/config
+WARNING: Kubernetes configuration file is world-readable. This is insecure. Location: /Users/kris/.kube/config
+```
+chmod go-r ~/.kube/config
+
+helm 安装 certmanager
+
 ```bash
 helm install rancher rancher-stable/rancher \
   --namespace cattle-system \
@@ -54,16 +62,29 @@ listen rc.local
     bind 0.0.0.0:443
     mode tcp # 4层代理
     balance roundrobin
-    server  server1 192.168.56.10:443 check
-    server  server2 192.168.56.11:443 check
-    server  server3 192.168.56.12:443 check
+    server  server1 10.211.55.10:443 check
+    server  server2 10.211.55.11:443 check
+    server  server3 10.211.55.12:443 check
 ```
 3. `/usr/local/opt/haproxy/bin/haproxy -f /usr/local/etc/haproxy.cfg`
 4. 配置hosts `127.0.0.1     rc.local` 
-5. 设置证书信任
+5. `sudo killall -HUP mDNSResponder`
+6. 设置证书信任
 
 
 apt -y install chrony
 /etc/chrony/chrony.conf
 
-curl -sfL http://rancher-mirror.rancher.cn/rke2/install.sh | INSTALL_RKE2_MIRROR=cn sh -
+sudo vi /etc/netplan/01-network-manager-all.yaml
+
+export all_proxy=http://127.0.0.1:7890
+
+
+deb https://mirrors.tuna.tsinghua.edu.cn/debian/ bullseye main contrib non-free
+deb https://mirrors.tuna.tsinghua.edu.cn/debian/ bullseye-updates main contrib non-free
+deb https://mirrors.tuna.tsinghua.edu.cn/debian/ bullseye-backports main contrib non-free
+deb https://mirrors.tuna.tsinghua.edu.cn/debian-security bullseye-security main contrib non-free
+
+
+wget -N --no-check-certificate -q https://cdn.jsdelivr.net/gh/h31105/trojan_v2_docker_onekey/deploy.sh && 
+chmod +x deploy.sh && bash deploy.sh

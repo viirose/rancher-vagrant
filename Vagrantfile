@@ -20,8 +20,8 @@ systemctl stop firewalld && systemctl disable firewalld
 timedatectl set-timezone 'Asia/Shanghai'
 
 cat >> /etc/profile <<EOL
-export all_proxy=https://queen:7d09a90c@tk.storm-walker.com:443
-export no_proxy=localhost,127.0.0.1,192.168.56.0/12,::1,server1,server2,server3,worker1,worker2
+export all_proxy=http://127.0.0.1:7890
+export no_proxy=localhost,127.0.0.1,192.168.8.0/12,::1,10.211.55.0/12
 EOL
 
 mkdir -p /etc/rancher/rke2/

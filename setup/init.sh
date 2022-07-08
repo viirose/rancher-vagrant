@@ -18,3 +18,7 @@ token:
 tls-san:
     - server1
 EOL
+
+# Longhorn
+apt install open-iscsi -y
+

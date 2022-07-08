@@ -86,5 +86,13 @@ deb https://mirrors.tuna.tsinghua.edu.cn/debian/ bullseye-backports main contrib
 deb https://mirrors.tuna.tsinghua.edu.cn/debian-security bullseye-security main contrib non-free
 
 
-wget -N --no-check-certificate -q https://cdn.jsdelivr.net/gh/h31105/trojan_v2_docker_onekey/deploy.sh && 
-chmod +x deploy.sh && bash deploy.sh
+wget -N --no-check-certificate -q https://cdn.jsdelivr.net/gh/h31105/trojan_v2_docker_onekey/deploy.sh && chmod +x deploy.sh && bash deploy.sh
+
+
+helm install rancher rancher-stable/rancher \
+  --namespace cattle-system \
+  --set hostname=r.local \
+  --set bootstrapPassword=admin
+
+
+apt install open-iscsi -y

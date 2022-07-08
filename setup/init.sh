@@ -22,3 +22,15 @@ EOL
 # Longhorn
 apt install open-iscsi -y
 
+# Chrony
+apt install chrony -y
+
+
+# --- server ---
+# server ntp1.aliyun.com 
+
+# allow 10.211.0.0/24
+# local stratum 10
+
+# --- client ---
+# server 192.168.8.10

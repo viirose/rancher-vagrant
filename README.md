@@ -89,10 +89,46 @@ deb https://mirrors.tuna.tsinghua.edu.cn/debian-security bullseye-security main 
 wget -N --no-check-certificate -q https://cdn.jsdelivr.net/gh/h31105/trojan_v2_docker_onekey/deploy.sh && chmod +x deploy.sh && bash deploy.sh
 
 
+/etc/rancher/rke2/config.yaml
+
+tls-san:
+  - 139.224.54.86
+  - rancher.viirose.com
+
 helm install rancher rancher-stable/rancher \
   --namespace cattle-system \
   --set hostname=r.local \
   --set bootstrapPassword=admin
 
+helm install rancher rancher-stable/rancher \
+  --namespace cattle-system \
+  --set hostname=rancher.viirose.com \
+  --set bootstrapPassword=admin \
+  --set ingress.tls.source=letsEncrypt \
+  --set letsEncrypt.email=krisnieh@163.com \
+  --set letsEncrypt.ingress.class=traefik
+
 
 apt install open-iscsi -y
+
+
+curl -sfL https://get.k3s.io | sh -s - server --cluster-init
+
+curl -sfL https://get.k3s.io | sh - 
+
+K3S_TOKEN=K10994e832211520375038b5b58eeac8febc49570074e7e2b48e97ea482d8356c41::server:5644c1c59f5ee2a8f47e5e49c36af2c2 k3s server --server https://server1:6443
+
+
+K3S_TOKEN=K1018cfe0ce82326e7a1adcc59bf8722b15d7b2c6ada9f37eaaff10cce2a23a12e1::server:05c62df19c6da2938ef2fe5fdc53f939 k3s server --cluster-init
+
+K3S_TOKEN=K1018cfe0ce82326e7a1adcc59bf8722b15d7b2c6ada9f37eaaff10cce2a23a12e1::server:05c62df19c6da2938ef2fe5fdc53f939 k3s server --server https://server1:6443
+
+curl -sfL https://get.k3s.io | K3S_URL=https://server1:6443 K3S_TOKEN=K1018cfe0ce82326e7a1adcc59bf8722b15d7b2c6ada9f37eaaff10cce2a23a12e1::server:05c62df19c6da2938ef2fe5fdc53f939 sh -
+
+curl -sfL https://get.k3s.io | sh -s - server --datastore-endpoint='mysql://admin:Rancher2019k3s@tcp(k3s-mysql.csrskwupj33i.ca-central-1.rds.amazonaws.com:3306)/k3sdb'
+
+curl -sfL https://get.k3s.io  \
+    | K3S_TOKEN=K1018cfe0ce82326e7a1adcc59bf8722b15d7b2c6ada9f37eaaff10cce2a23a12e1::server:05c62df19c6da2938ef2fe5fdc53f939 \
+      bash -s - server --server https://server1:6443
+
+
